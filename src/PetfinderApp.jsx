@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom'
-import { UiProvider } from './context/ui/UiProvider'
 
-import { AppRouter } from "./router/AppRouter"
+import { UiProvider } from './context/ui'
+import { AppRouter } from './router'
 
 export const PetfinderApp = () => {
   return (

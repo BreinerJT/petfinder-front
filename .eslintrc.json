@@ -19,5 +19,8 @@
         "react"
     ],
     "rules": {
+        "no-unused-vars": ["warn"],
+        "no-tabs": 0,
+        "react/prop-types": 0
     }
 }

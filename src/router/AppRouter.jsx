@@ -1,5 +1,5 @@
-import { Navigate, Route, Routes } from "react-router-dom"
-import { AuthRoutes, PetfinderRoutes } from "."
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { AuthRoutes, PetfinderRoutes } from './'
 
 export const AppRouter = () => {
   const isVerified = true
@@ -12,8 +12,8 @@ export const AppRouter = () => {
             ? <Route path='/*' element={ <PetfinderRoutes /> } />
             : <Route path='/*' element={ <AuthRoutes /> } />
         }
-        
-        <Route path='/*' element={ <Navigate to='/auth/login' /> } />        
+
+        <Route path='/*' element={ <Navigate to='/auth/login' /> } />
 
       </Routes>
     </>
