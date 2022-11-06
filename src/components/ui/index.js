@@ -1,4 +1,4 @@
-export * from './InputWithLabel'
+export * from './Input'
 export * from './MatchView'
 export * from './Menu'
 export * from './Sidebar'

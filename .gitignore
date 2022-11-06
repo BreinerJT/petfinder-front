@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+vite.config.js.timestamp-1667073959082.mjs
 
 node_modules
 dist

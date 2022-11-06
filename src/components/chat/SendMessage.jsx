@@ -31,7 +31,7 @@ export const SendMessage = () => {
     <form onSubmit={ onSubmit } className='h-[10%] flex border border-transparent border-t-black dark:border-t-white'>
       <input
         autoFocus
-        className='dark:text-slate-300 font-medium h-full bg-inherit flex-1 word-break overflow-y-auto outline-none border-none focus:border-none focus:ring-transparent'
+        className='pl-4 dark:text-slate-300 font-medium h-full bg-inherit flex-1 word-break overflow-y-auto outline-none border-none focus:border-none focus:ring-transparent'
         onChange={ onChange }
         placeholder='Mensaje...'
         type='text'

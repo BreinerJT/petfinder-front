@@ -16,7 +16,7 @@ export const Menu = () => {
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
       </button>
 
-    <div className={`absolute right-4 top-12 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 ${showMenu ? 'block' : 'hidden'}`}>
+    <div className={`absolute right-4 top-12 z-10 w-44 bg-white rounded divide-y divide-gray-400 shadow dark:bg-gray-700 dark:divide-gray-600 ${showMenu ? 'block' : 'hidden'}`}>
       <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
         <li onBlur={ () => setShowMenu(false) }>
           <button onClick={ openPetModal } className="text-start w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Agregar Mascota</button>
