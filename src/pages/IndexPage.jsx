@@ -3,26 +3,29 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import { UiContext } from '../context/ui'
+import { AuthContext } from '../context/auth'
 import { RegisterModal } from '../components/auth'
 import { Input } from '../components/ui'
 import { loginSchema } from '../config'
 
 export const IndexPage = () => {
-  const { openRegisterModal, toggleTheme, isDark } = useContext(UiContext)
+  const { openRegisterModal, setDarkTheme, setLightTheme } = useContext(UiContext)
+  const { login } = useContext(AuthContext)
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(loginSchema)
   })
 
   const onSubmit = ({ email, password, rememberMe }) => {
     console.log({ email, password, rememberMe })
+    login()
   }
 
   return (
 		<div className='relative'>
 			<div className='flex flex-col md:grid md:grid-cols-2 justify-center items-center min-h-screen bg-gradient-to-br from-red-300 via-pink-400 to-red-300 dark:from-cyan-300 dark:via-blue-700 dark:to-cyan-300 transition-colors duration-300'>
 				<div className='text-center grid items-center justify-center gap-2'>
-					<div className='flex justify-center object-fill'>
-						<img className='rounded-full w-40 h-40' src="./logo.png" alt="Logo." />
+					<div className='flex justify-center'>
+						<img className='w-40 h-40' src="./logo.png" alt="Logo." />
 					</div>
 					<div>
 						<h2 className='text-4xl font-semibold'>Encuentra en</h2>
@@ -84,22 +87,18 @@ export const IndexPage = () => {
 				</form>
 				<RegisterModal />
 			</div>
-			{/* <div className='absolute top-8 right-8'>
-			<label htmlFor="red-toggle" className="inline-flex relative items-center mr-5 cursor-pointer">
-				<input type="checkbox" value="" id="red-toggle" className="sr-only peer" checked />
-				<div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 dark:bg-green-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
-				<span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Red</span>
-			</label>
-			</div> */}
+			<div className='absolute right-8 top-8 flex gap-4 [&>button:hover]:scale-110'>
 				<button
-					onClick={ toggleTheme }
-					className='absolute right-8 top-8 w-8 h-8 bg-inherit rounded-full dark:text-white text-yellow-300'
-				>
-					{ isDark
-					  ? <svg className='w-6 h-6' viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-					  : <svg className='w-6 h-6' viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-					}
-				</button>
+					aria-label='set light theme'
+					onClick={ setLightTheme }
+					className='w-8 h-8 bg-pink-400 rounded-full border border-white'
+				></button>
+				<button
+					aria-label='set dark theme'
+					onClick={ setDarkTheme }
+					className='w-8 h-8 bg-blue-700 rounded-full border border-white'
+				></button>
+			</div>
 		</div>
   )
 }

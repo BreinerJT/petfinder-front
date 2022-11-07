@@ -6,7 +6,7 @@ export const UiProvider = ({ children }) => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
   const [isPetModalOpen, setIsPetModalOpen] = useState(false)
   const [showSwipeView, setShowSwipeView] = useState(true)
-  const { toggleTheme, isDark } = useTheme()
+  const { toggleTheme, isDark, setDarkTheme, setLightTheme } = useTheme()
 
   const closeRegisterModal = () => {
     setIsRegisterModalOpen(false)
@@ -47,6 +47,8 @@ export const UiProvider = ({ children }) => {
       toggleMessagesView,
       toggleSwipeView,
       toggleTheme,
+      setDarkTheme,
+      setLightTheme,
       isDark
     }}>
       { children }

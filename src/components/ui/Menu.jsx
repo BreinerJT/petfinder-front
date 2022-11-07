@@ -1,9 +1,15 @@
 import { useContext, useState } from 'react'
+import { AuthContext } from '../../context/auth/AuthContext'
 import { UiContext } from '../../context/ui'
 
 export const Menu = () => {
   const { openPetModal, toggleTheme, isDark } = useContext(UiContext)
+  const { logout } = useContext(AuthContext)
   const [showMenu, setShowMenu] = useState(false)
+
+  const handleLogout = () => {
+    logout()
+  }
 
   return (
     <div className='relative'>
@@ -36,7 +42,12 @@ export const Menu = () => {
         </li>
       </ul>
       <div className="py-1">
-        <button className="w-full text-start py-2 px-4 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-red-500 dark:hover:text-red-500">Salir</button>
+        <button
+          onClick={ handleLogout }
+          className="w-full text-start py-2 px-4 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-red-500 dark:hover:text-red-500"
+        >
+          Salir
+        </button>
       </div>
     </div>
   </div>

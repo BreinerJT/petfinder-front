@@ -3,41 +3,35 @@ import TinderCard from 'react-tinder-card'
 
 const nombres = [
   {
-    photos: [],
+    photos: 'culebra.jpg',
     name: 'Princesa',
     age: '7 años',
     description: 'French puddle blanca orejona'
   },
   {
-    photos: [],
+    photos: 'perro.jpg',
     name: 'Princesa',
     age: '7 años',
     description: 'French puddle blanca orejona'
   },
   {
-    photos: [],
+    photos: 'gato.jpg',
     name: 'Princesa',
     age: '7 años',
     description: 'French puddle blanca orejona'
   },
   {
-    photos: [],
-    name: 'Princesa',
-    age: '7 años',
-    description: 'French puddle blanca orejona'
-  },
-  {
-    photos: [],
-    name: 'Princesa',
-    age: '7 años',
-    description: 'French puddle blanca orejona'
-  },
-  {
-    photos: [],
+    photos: 'fat.jpg',
     name: 'Princesa',
     age: '7 años',
     description: 'French puddle blanca orejona'
   }
+  // {
+  //   photos: [],
+  //   name: 'Princesa',
+  //   age: '7 años',
+  //   description: 'French puddle blanca orejona'
+  // }
 ]
 
 export const MatchView = () => {
@@ -96,7 +90,9 @@ export const MatchView = () => {
               onSwipe={ (dir) => swiped(dir, nombre.name, index) }
               preventSwipe={ ['down', 'up'] }
             >
-              <h1 className='-translate-x-2/4 bg-pink-900 w-[80vw] max-w-[260px] h-80 rounded-2xl bg-cover bg-center borrar grid items-center text-center text-white text-6xl font-bold'>{ index + 1 }</h1>
+              <div className='-translate-x-2/4 w-[80vw] max-w-[260px] h-80 rounded-2xl bg-cover bg-center borrar grid items-center text-center text-white text-6xl font-bold select-none overflow-hidden'>
+                <img className='w-full h-full object-cover' src={ nombre.photos } alt="photo" />
+              </div>
             </TinderCard>
           ))
         }
