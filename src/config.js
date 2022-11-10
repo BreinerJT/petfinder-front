@@ -42,8 +42,17 @@ export const petSchema = yup.object({
     .string()
     .matches(/^([^0-9]*)$/i, 'La ciudad no es valida.')
     .required('Es necesario ingresar una ciudad.'),
-  about: yup
+  quality1: yup
     .string()
+    .matches(/^\b[a-zA-Z0-9_]+\b$/)
+    .required('Es necesario ingresar informacion.'),
+  quality2: yup
+    .string()
+    .matches(/^\b[a-zA-Z0-9_]+\b$/)
+    .required('Es necesario ingresar informacion.'),
+  quality3: yup
+    .string()
+    .matches(/^\b[a-zA-Z0-9_]+\b$/)
     .required('Es necesario ingresar informacion.'),
   photos: yup
     .mixed()

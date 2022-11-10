@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 
 import { UiContext } from '../context/ui'
-import { MatchView, PetModal, Sidebar } from '../components/ui'
+import { MatchView, Sidebar } from '../components/ui'
 import { ChatMessage } from '../components/chat'
 
 export const HomePage = () => {
@@ -18,7 +18,6 @@ export const HomePage = () => {
         }
       </div>
     </div>
-    <PetModal />
   </>
   )
 }

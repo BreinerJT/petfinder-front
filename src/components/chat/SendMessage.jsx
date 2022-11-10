@@ -16,7 +16,7 @@ export const SendMessage = () => {
   }
 
   const setEmoji = (e) => {
-    setMessage(curr => curr + e.native)
+    setMessage(message.concat(e.native))
   }
 
   const onSubmit = (e) => {
@@ -50,6 +50,7 @@ export const SendMessage = () => {
           aria-label='Emojis'
           className={`hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded-full ${!showEmojis ? 'bg-inherit dark:bg-gray-900' : 'bg-gray-200 dark:bg-gray-700'}`}
           onClick={ () => setShowEmojis(!showEmojis) }
+          type='button'
         >
           😐
         </button>

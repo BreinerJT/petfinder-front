@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
@@ -11,49 +11,61 @@ import { loginSchema } from '../config'
 export const IndexPage = () => {
   const { openRegisterModal, setDarkTheme, setLightTheme } = useContext(UiContext)
   const { login } = useContext(AuthContext)
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm({
     resolver: yupResolver(loginSchema)
   })
 
   const onSubmit = ({ email, password, rememberMe }) => {
-    console.log({ email, password, rememberMe })
+    rememberMe
+      ? localStorage.setItem('email', email)
+      :	localStorage.removeItem('email')
+
     login()
   }
+
+  useEffect(() => {
+    const email = localStorage.getItem('email')
+
+    if (email) {
+      setValue('email', email)
+      setValue('rememberMe', true)
+    }
+  }, [])
 
   return (
 		<div className='relative'>
 			<div className='flex flex-col md:grid md:grid-cols-2 justify-center items-center min-h-screen bg-gradient-to-br from-red-300 via-pink-400 to-red-300 dark:from-cyan-300 dark:via-blue-700 dark:to-cyan-300 transition-colors duration-300'>
 				<div className='text-center grid items-center justify-center gap-2'>
-					<div className='flex justify-center'>
-						<img className='w-40 h-40' src="./logo.png" alt="Logo." />
+					<div className='flex justify-center mx-auto w-40 h-40'>
+						<img src="./logo.png" alt="Logo." />
 					</div>
 					<div>
-						<h2 className='text-4xl font-semibold'>Encuentra en</h2>
-						<h1 className='text-6xl font-bold'>PETFINDER</h1>
-						<h2 className='text-4xl font-semibold'>tu proximo mejor amigo</h2>
+						<h2 className='text-white text-4xl font-semibold'>Encuentra en</h2>
+						<h1 className='text-white text-6xl font-bold'>PETFINDER</h1>
+						<h2 className='text-white text-4xl font-semibold'>tu proximo mejor amigo</h2>
 					</div>
 				</div>
 				<form className='px-24' noValidate onSubmit={handleSubmit(onSubmit)}>
 					<div className='mb-6'>
 						<Input
 							autoFocus
+							border={ errors.email?.message }
 							label='Correo electronico'
 							placeholder='unknown@google.com'
 							themed
 							type='email'
 							{...register('email') }
 						/>
-						<p className='pt-2 text-red-500 font-semibold'>{errors.email?.message}</p>
 					</div>
 					<div className='mb-6'>
 						<Input
+							border={ errors.password?.message }
 							label='Contraseña'
 							placeholder='Ingrese su contraseña...'
 							themed
 							type='password'
 							{...register('password')}
 						/>
-						<p className='pt-2 text-red-500 font-semibold'>{errors.password?.message}</p>
 					</div>
 					<div className='flex items-start mb-6'>
 						<div className='h-5'>
@@ -91,12 +103,12 @@ export const IndexPage = () => {
 				<button
 					aria-label='set light theme'
 					onClick={ setLightTheme }
-					className='w-8 h-8 bg-pink-400 rounded-full border border-white'
+					className='w-8 h-8 bg-pink-400 rounded-full border-2 border-white'
 				></button>
 				<button
 					aria-label='set dark theme'
 					onClick={ setDarkTheme }
-					className='w-8 h-8 bg-blue-700 rounded-full border border-white'
+					className='w-8 h-8 bg-blue-700 rounded-full border-2 border-white'
 				></button>
 			</div>
 		</div>

@@ -28,7 +28,16 @@ export const PetModal = () => {
   }
 
   const onSubmit = (data) => {
-    console.log(data)
+    const newPet = {
+      age: data.age,
+      city: data.city,
+      description: [data.quality1, data.quality2, data.quality3],
+      name: data.name,
+      photos: data.photos
+    }
+
+    console.log(newPet)
+
     // closePetModal()
   }
 
@@ -45,17 +54,17 @@ export const PetModal = () => {
 				<div className='mb-2'>
 					<Input
             autoFocus
+						border={ errors.name?.message }
 						label='Nombre'
             placeholder='Miscifu Garras Afiladas'
 						{ ...register('name') }
           />
-					<p className='pt-2 text-sm text-red-500 font-semibold'>{errors.name?.message}</p>
 				</div>
 				<div className='mb-2'>
 					<label className='grid gap-2 font-medium text-gray-900'>
 						Edad
 						<select
-							className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+							className={`bg-gray-50 border-2 border-gray-200 text-gray-900 text-sm rounded-lg block w-full p-2.5 ${errors.age?.message && 'border-red-500'}`}
 							{ ...register('age') }
 						>
 						{
@@ -71,22 +80,24 @@ export const PetModal = () => {
 						}
 						</select>
 					</label>
-					{/* <Input
-						label='Edad'
-						placeholder='miscifu@google.com'
-						{ ...register('age') }
-					/> */}
-					{/* <p className='pt-2 text-sm text-red-500 font-semibold'>{errors.age?.message}</p> */}
 				</div>
 				<div className='mb-2'>
-					<Input label='Ciudad' placeholder='Ingrese su ciudad...' { ...register('city') } />
-					<p className='pt-2 text-sm text-red-500 font-semibold'>{errors.city?.message}</p>
+					<Input
+						border={ errors.city?.message }
+						label='Ciudad'
+						placeholder='Ingrese su ciudad...'
+						{ ...register('city') }
+					/>
 				</div>
 				<div className='mb-2'>
 					<label className='grid gap-2 font-medium text-gray-900'>
-						Cuentanos mas sobre el peludo
-						<textarea className='p-2.5 w-full resize-none border' cols="30" { ...register('about') } />
-						<p className='pt-2 text-sm text-red-500 font-semibold'>{errors.about?.message}</p>
+						Describelo en tres palabras
+						<div className='flex gap-2'>
+							<Input placeholder='Cariñoso(a)' border={ errors.quality1?.message } { ...register('quality1') } />
+							<Input placeholder='Jugueton(a)' border={ errors.quality2?.message } { ...register('quality2') } />
+							<Input placeholder='Tierno(a)' border={ errors.quality3?.message } { ...register('quality3') } />
+						</div>
+						{/* <textarea className={`p-2.5 border-2 border-gray-200 w-full resize-none ${errors.about?.message && 'border-red-500'}`} cols="30" { ...register('about') } /> */}
 					</label>
 				</div>
 				<div className='mb-2'>
