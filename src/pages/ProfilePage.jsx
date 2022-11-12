@@ -3,7 +3,7 @@ import { SidebarLayout } from '../components/layout'
 import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { UiContext } from '../context/ui'
-import { AuthContext } from '../context/auth/AuthContext'
+import { AuthContext } from '../context/auth'
 
 const nombres = [
   {
@@ -41,11 +41,7 @@ const nombres = [
 
 export const ProfilePage = () => {
   const { openPetModal, toggleTheme, isDark } = useContext(UiContext)
-  const { logout } = useContext(AuthContext)
-
-  const handleLogout = () => {
-    logout()
-  }
+  const { logout, name, city } = useContext(AuthContext)
 
   return (
   <>
@@ -55,8 +51,8 @@ export const ProfilePage = () => {
           <div className='w-[260px] h-80 rounded-2xl bg-cover bg-center' style={{ backgroundImage: 'url("./profile.jpg")' }} />
           {/* <img className='max-w-[260px] h-80 rounded-2xl bg-cover bg-center' src="./profile.jpg" alt="yo" /> */}
           <div className='text-gray-700 dark:text-slate-300 text-center'>
-            <h2 className='text-xl font-semibold capitalize'>Breiner Torres</h2>
-            <h3 className='text-lg font-medium'>Valledupar, Cesar</h3>
+            <h2 className='text-xl font-semibold capitalize'>{ name }</h2>
+            <h3 className='text-lg font-medium'>{ city }</h3>
           </div>
           <div className='bg-gray-50 dark:bg-gray-800 rounded bg-inherit'>
             <ul className="py-1 text-sm text-gray-700 dark:text-slate-300">
@@ -85,7 +81,7 @@ export const ProfilePage = () => {
                 Volver
               </Link>
               <button
-                onClick={ handleLogout }
+                onClick={ logout }
                 className="w-full text-start py-2 px-4 text-gray-700 dark:text-gray-200 hover:text-red-500 dark:hover:text-red-500 hover:bg-gray-100 dark:hover:bg-gray-600"
               >
                 Salir

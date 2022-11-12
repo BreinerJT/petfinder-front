@@ -13,9 +13,8 @@ export const loginSchema = yup.object({
 }).required()
 
 export const registerSchema = yup.object({
-  fullName: yup
+  name: yup
     .string()
-    .matches(/^([^0-9]*)$/i, 'El nombre no es valido.')
     .required('Es necesario ingresar un nombre.'),
   city: yup
     .string()

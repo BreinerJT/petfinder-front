@@ -1,16 +1,23 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import { Loader } from '../components/ui'
 import { AuthContext } from '../context/auth'
 import { AuthRoutes, PetfinderRoutes } from './'
 
 export const AppRouter = () => {
-  const { isVerified } = useContext(AuthContext)
+  const { logged, verificarToken, checking } = useContext(AuthContext)
+
+  useEffect(() => {
+    verificarToken()
+  }, [verificarToken])
+
+  if (checking) return <Loader />
 
   return (
     <>
       <Routes>
         {
-          isVerified
+          logged
             ? <Route path='/*' element={ <PetfinderRoutes /> } />
             : <Route path='/*' element={ <AuthRoutes /> } />
         }

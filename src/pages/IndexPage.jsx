@@ -10,7 +10,7 @@ import { loginSchema } from '../config'
 
 export const IndexPage = () => {
   const { openRegisterModal, setDarkTheme, setLightTheme } = useContext(UiContext)
-  const { login } = useContext(AuthContext)
+  const { auth, login } = useContext(AuthContext)
   const { register, handleSubmit, formState: { errors }, setValue } = useForm({
     resolver: yupResolver(loginSchema)
   })
@@ -20,7 +20,7 @@ export const IndexPage = () => {
       ? localStorage.setItem('email', email)
       :	localStorage.removeItem('email')
 
-    login()
+    login({ email, password })
   }
 
   useEffect(() => {
@@ -66,6 +66,7 @@ export const IndexPage = () => {
 							type='password'
 							{...register('password')}
 						/>
+						<p className='text-red-500 font-bold text-sm pt-2'>{ auth.error?.login }</p>
 					</div>
 					<div className='flex items-start mb-6'>
 						<div className='h-5'>

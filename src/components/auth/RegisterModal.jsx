@@ -4,14 +4,16 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import { UiContext } from '../../context/ui'
+import { AuthContext } from '../../context/auth'
 import { Input } from '../ui'
 import { registerSchema } from '../../config'
 
 Modal.setAppElement('#root')
 export const RegisterModal = () => {
   const { isRegisterModalOpen, closeRegisterModal } = useContext(UiContext)
+  const { register: onRegister, auth } = useContext(AuthContext)
   const [isShowingPassword, setisShowingPassword] = useState(false)
-  // const { registerSchema } = useSchema()
+
   const {
     register,
     handleSubmit,
@@ -21,7 +23,7 @@ export const RegisterModal = () => {
   })
 
   const onSubmit = (data) => {
-    console.log(data)
+    onRegister(data)
   }
 
   return (
@@ -37,10 +39,10 @@ export const RegisterModal = () => {
 				<div className='mb-6'>
 					<Input
 						autoFocus
-						border={ errors.fullName?.message }
+						border={ errors.name?.message }
 						label='Nombre y apellido(s)'
 						placeholder='Tu nombre...'
-						{...register('fullName')}
+						{...register('name')}
 					/>
 				</div>
 				<div className='mb-6'>
@@ -81,6 +83,7 @@ export const RegisterModal = () => {
 							}
 						</button>
 					</div>
+						<p className='text-red-500 font-bold text-sm pt-2'>{ auth.error?.register }</p>
 				</div>
 				<button
 					className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center'
