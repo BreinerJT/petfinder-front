@@ -6,6 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { UiContext } from '../../context/ui'
 import { Input } from '../ui'
 import { petSchema } from '../../config'
+import { PetContext } from '../../context/pet'
+import { onUploadFiles } from '../../helpers'
 
 const options = [
   { value: '', text: '--Seleccione una edad--', disabled: true },
@@ -18,7 +20,8 @@ const options = [
 Modal.setAppElement('#root')
 export const PetModal = () => {
   const { isPetModalOpen, closePetModal } = useContext(UiContext)
-  const { handleSubmit, register, formState: { errors }, clearErrors } = useForm({
+  const { addNewPet } = useContext(PetContext)
+  const { handleSubmit, register, formState: { errors }, clearErrors, reset } = useForm({
     resolver: yupResolver(petSchema)
   })
 
@@ -27,18 +30,25 @@ export const PetModal = () => {
     clearErrors()
   }
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    const photos = await onUploadFiles(data.photos)
     const newPet = {
       age: data.age,
       city: data.city,
       description: [data.quality1, data.quality2, data.quality3],
       name: data.name,
-      photos: data.photos
+      photos
     }
+    const resp = await addNewPet(newPet)
+    if (resp) {
+      reset()
+      closePetModal()
+    }
+  }
 
-    console.log(newPet)
-
-    // closePetModal()
+  const onFileInputChange = ({ target }) => {
+    if (target.files === 0) return
+    onUploadFiles(target.files)
   }
 
   return (
@@ -57,6 +67,7 @@ export const PetModal = () => {
 						border={ errors.name?.message }
 						label='Nombre'
             placeholder='Miscifu Garras Afiladas'
+						value='test2'
 						{ ...register('name') }
           />
 				</div>
@@ -86,6 +97,7 @@ export const PetModal = () => {
 						border={ errors.city?.message }
 						label='Ciudad'
 						placeholder='Ingrese su ciudad...'
+						value='test'
 						{ ...register('city') }
 					/>
 				</div>
@@ -93,17 +105,16 @@ export const PetModal = () => {
 					<label className='grid gap-2 font-medium text-gray-900'>
 						Describelo en tres palabras
 						<div className='flex gap-2'>
-							<Input placeholder='Cariñoso(a)' border={ errors.quality1?.message } { ...register('quality1') } />
-							<Input placeholder='Jugueton(a)' border={ errors.quality2?.message } { ...register('quality2') } />
-							<Input placeholder='Tierno(a)' border={ errors.quality3?.message } { ...register('quality3') } />
+							<Input value='test' placeholder='Cariñoso(a)' border={ errors.quality1?.message } { ...register('quality1') } />
+							<Input value='test' placeholder='Jugueton(a)' border={ errors.quality2?.message } { ...register('quality2') } />
+							<Input value='test' placeholder='Tierno(a)' border={ errors.quality3?.message } { ...register('quality3') } />
 						</div>
-						{/* <textarea className={`p-2.5 border-2 border-gray-200 w-full resize-none ${errors.about?.message && 'border-red-500'}`} cols="30" { ...register('about') } /> */}
 					</label>
 				</div>
 				<div className='mb-2'>
 					<label className='grid gap-2 font-medium text-gray-900'>
 						Tienes algunas fotos? (max: 4)
-						<input type="file" accept="image/png, image/jpeg" { ...register('photos') } />
+						<input multiple onChange={ onFileInputChange } type="file" accept="image/png, image/jpeg" { ...register('photos') } />
 						<p className='pt-2 text-sm text-red-500 font-semibold'>{errors.photos?.message}</p>
 					</label>
 				</div>

@@ -1,9 +1,10 @@
 import { PetModal } from '../components/ui'
 import { SidebarLayout } from '../components/layout'
 import { Link } from 'react-router-dom'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { UiContext } from '../context/ui'
 import { AuthContext } from '../context/auth'
+import { PetContext } from '../context/pet'
 
 const nombres = [
   {
@@ -41,14 +42,19 @@ const nombres = [
 
 export const ProfilePage = () => {
   const { openPetModal, toggleTheme, isDark } = useContext(UiContext)
-  const { logout, name, city } = useContext(AuthContext)
+  const { logout, name, city, photoUrl } = useContext(AuthContext)
+  const { getOwnPets, myPets } = useContext(PetContext)
+
+  useEffect(() => {
+    getOwnPets()
+  }, [myPets])
 
   return (
   <>
     <div className='flex'>
       <SidebarLayout>
         <div className='grid gap-2 justify-center py-8'>
-          <div className='w-[260px] h-80 rounded-2xl bg-cover bg-center' style={{ backgroundImage: 'url("./profile.jpg")' }} />
+          <div className='w-[260px] h-80 rounded-2xl bg-cover bg-center' style={{ backgroundImage: 'url("https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg")' }} />
           {/* <img className='max-w-[260px] h-80 rounded-2xl bg-cover bg-center' src="./profile.jpg" alt="yo" /> */}
           <div className='text-gray-700 dark:text-slate-300 text-center'>
             <h2 className='text-xl font-semibold capitalize'>{ name }</h2>
@@ -94,12 +100,11 @@ export const ProfilePage = () => {
         <h1 className='font-semibold text-2xl pb-6 text-gray-700 dark:text-slate-300'>¡Mis mascotas en adopcion!</h1>
         <div className='flex gap-8 justify-center items-center flex-wrap'>
           {
-            nombres.map((mascota, index) => (
+            myPets.map((pet, index) => (
               <div key={index} className='relative max-w-[260px] h-80 rounded-2xl overflow-hidden'>
-                <div className='w-[260px] h-80 rounded-2xl bg-cover bg-center' style={{ backgroundImage: `url("${mascota.photos}")` }} />
-                {/* <img className='w-full h-full object-cover' src={ mascota.photos } alt="photo" /> */}
+                <div className='w-[260px] h-80 rounded-2xl bg-cover bg-center' style={{ backgroundImage: `url("${pet.photos[0]}")` }} />
                 <div className='text-start absolute bottom-0 px-4 py-1 backdrop-blur-sm bg-black bg-opacity-5 w-full'>
-                  <h1 className='font-semmibold text-xl select-none'>{mascota.name}</h1>
+                  <h1 className='font-semmibold text-xl select-none'>{pet.name}</h1>
                 </div>
               </div>
             ))

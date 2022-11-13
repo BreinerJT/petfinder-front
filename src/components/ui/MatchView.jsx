@@ -1,50 +1,20 @@
-import { createRef, useMemo, useRef, useState } from 'react'
+import { useContext, useEffect, createRef, useMemo, useRef, useState } from 'react'
+
 import TinderCard from 'react-tinder-card'
 
-const nombres = [
-  {
-    photos: 'culebra.jpg',
-    name: 'Princesa',
-    age: '7 años',
-    description: ['jugueton', 'cariñoso', 'algomas']
-  },
-  {
-    photos: 'perro.jpg',
-    name: 'Princesa',
-    age: '7 años',
-    description: ['jugueton', 'cariñoso', 'algomas']
-  },
-  {
-    photos: 'gato.jpg',
-    name: 'Princesa',
-    age: '7 años',
-    description: ['jugueton', 'cariñoso', 'algomas']
-  },
-  {
-    photos: 'fat.jpg',
-    name: 'Princesa',
-    age: '7 años',
-    description: ['jugueton', 'cariñoso', 'algomas']
-  }
-  // {
-  //   photos: [],
-  //   name: 'Princesa',
-  //   age: '7 años',
-  //   description: 'French puddle blanca orejona',
-  //   uid: ahsdhasdhaoisdhakd
-  // }
-]
+import { PetContext } from '../../context/pet'
 
 export const MatchView = () => {
-  const [currentIndex, setCurrentIndex] = useState(nombres.length - 1)
+  const { getAllPets, allPets } = useContext(PetContext)
+  const [currentIndex, setCurrentIndex] = useState(allPets.length - 1)
 
   const currentIndexRef = useRef(currentIndex)
-  const canGoBack = currentIndex < nombres.length - 1
+  const canGoBack = currentIndex < allPets.length - 1
   const canSwipe = currentIndex >= 0
 
   const childRefs = useMemo(
     () =>
-      Array(nombres.length)
+      Array(allPets.length)
         .fill(0)
         .map((i) => createRef()),
     []
@@ -64,7 +34,7 @@ export const MatchView = () => {
   }
 
   const swipe = async (dir) => {
-    if (canSwipe && currentIndex < nombres.length) {
+    if (canSwipe && currentIndex < allPets.length) {
       await childRefs[currentIndex].current.swipe(dir)
     }
   }
@@ -76,12 +46,16 @@ export const MatchView = () => {
     await childRefs[newIndex].current.restoreCard()
   }
 
+  useEffect(() => {
+    getAllPets()
+  }, [])
+
   return (
     <div className='h-full overflow-hidden relative flex justify-center items-center'>
       {/* <div className='max-w-[260px] h-[300px] relative'> */}
       <div className='w-[260px] h-80'>
         {
-          nombres.map((mascota, index) => (
+          allPets.map((mascota, index) => (
             <TinderCard
               className='absolute'
               key={ index }
@@ -91,7 +65,7 @@ export const MatchView = () => {
               ref={ childRefs[index] }
             >
               <div className='relative w-[260px] h-80 rounded-2xl bg-cover bg-center select-none overflow-hidden'>
-                <img className='w-full h-full object-cover' src={ mascota.photos } alt="photo" />
+                <img className='w-full h-full object-cover' src={ mascota.photos[0] } alt="photo" />
                 <div className='absolute bottom-0 p-2'>
                   <h1 className='text-white font-semibold text-xl'>{mascota.name}, <span className='font-normal text-sm'>{mascota.age}</span></h1>
                   <div className='flex gap-1 items-center'>
@@ -108,7 +82,7 @@ export const MatchView = () => {
             </TinderCard>
           ))
         }
-        <div className='relative top-[344px] flex justify-center gap-4'>
+        {/* <div className='relative top-[344px] flex justify-center gap-4'>
           <button
             aria-label='Go back button'
             className={`flex items-center justify-center h-12 w-12 border-2 bg-transparent rounded-full ${canGoBack ? 'border-yellow-500 text-yellow-500' : 'border-zinc-400 text-zinc-500'}`}
@@ -133,7 +107,7 @@ export const MatchView = () => {
           >
             <svg className='w-8 h-8' viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
           </button>
-        </div>
+        </div> */}
       </div>
       {/* <div className='max-w-[260px] h-[300px]'>
         {

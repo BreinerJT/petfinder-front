@@ -1,5 +1,7 @@
-import { useCallback, useState } from 'react'
+import { useContext, useCallback, useState } from 'react'
+
 import { authApi } from '../../apis'
+import { PetContext } from '../pet'
 import { AuthContext } from './AuthContext'
 
 const initialState = {
@@ -14,6 +16,7 @@ const initialState = {
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(initialState)
+  const { cleanPets } = useContext(PetContext)
 
   const login = async ({ email, password }) => {
     try {
@@ -38,8 +41,7 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const register = async (values) => {
-    const { city, name, email, password } = values
+  const register = async ({ city, name, email, password }) => {
     try {
       const { data } = await authApi.post('/new', { city, name, email, password })
       localStorage.setItem('token', data.token)
@@ -53,6 +55,7 @@ export const AuthProvider = ({ children }) => {
         photoUrl: data.photoUrl,
         uid: data.uid
       })
+      return true
     } catch (error) {
       setAuth({
         ...auth,
@@ -71,7 +74,6 @@ export const AuthProvider = ({ children }) => {
     }
 
     const { data } = await authApi.get('/renew')
-
     if (data.ok) {
       localStorage.setItem('token', data.token)
       const { city, email, name, photoUrl, uid } = data
@@ -92,6 +94,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('token')
+    cleanPets()
     setAuth({
       email: null,
       logged: false,

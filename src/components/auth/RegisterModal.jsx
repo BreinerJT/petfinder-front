@@ -22,8 +22,9 @@ export const RegisterModal = () => {
     resolver: yupResolver(registerSchema)
   })
 
-  const onSubmit = (data) => {
-    onRegister(data)
+  const onSubmit = async ({ city, name, email, password }) => {
+    const resp = await onRegister({ city, name, email, password })
+    if (resp) closeRegisterModal()
   }
 
   return (
