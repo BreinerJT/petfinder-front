@@ -67,7 +67,6 @@ export const PetModal = () => {
 						border={ errors.name?.message }
 						label='Nombre'
             placeholder='Miscifu Garras Afiladas'
-						value='test2'
 						{ ...register('name') }
           />
 				</div>
@@ -97,7 +96,6 @@ export const PetModal = () => {
 						border={ errors.city?.message }
 						label='Ciudad'
 						placeholder='Ingrese su ciudad...'
-						value='test'
 						{ ...register('city') }
 					/>
 				</div>
@@ -105,9 +103,9 @@ export const PetModal = () => {
 					<label className='grid gap-2 font-medium text-gray-900'>
 						Describelo en tres palabras
 						<div className='flex gap-2'>
-							<Input value='test' placeholder='Cariñoso(a)' border={ errors.quality1?.message } { ...register('quality1') } />
-							<Input value='test' placeholder='Jugueton(a)' border={ errors.quality2?.message } { ...register('quality2') } />
-							<Input value='test' placeholder='Tierno(a)' border={ errors.quality3?.message } { ...register('quality3') } />
+							<Input placeholder='Cariñoso(a)' border={ errors.quality1?.message } { ...register('quality1') } />
+							<Input placeholder='Jugueton(a)' border={ errors.quality2?.message } { ...register('quality2') } />
+							<Input placeholder='Tierno(a)' border={ errors.quality3?.message } { ...register('quality3') } />
 						</div>
 					</label>
 				</div>
