@@ -1,5 +1,9 @@
+import { useContext } from 'react'
+import { AuthContext } from '../../context/auth'
 
 export const OutcomingMessage = () => {
+  const { photoUrl } = useContext(AuthContext)
+
   return (
     <div className="place-self-end mb-4">
       <div className="pr-12 text-end">
@@ -12,7 +16,7 @@ export const OutcomingMessage = () => {
           </p>
         </div>
         <div>
-          <img className="w-10 h-10 rounded-full" src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" alt="algo" />
+          <div className="w-10 h-10 rounded-full bg-cover" style={{ backgroundImage: photoUrl ? `url('${photoUrl}')` : "url('./profile.jpg')" }} />
         </div>
       </div>
     </div>

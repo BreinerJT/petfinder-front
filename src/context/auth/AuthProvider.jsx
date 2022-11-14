@@ -1,4 +1,4 @@
-import { useContext, useCallback, useState } from 'react'
+import { useEffect, useContext, useCallback, useState } from 'react'
 
 import { authApi } from '../../apis'
 import { PetContext } from '../pet'
@@ -9,6 +9,7 @@ const initialState = {
   email: null,
   logged: false,
   error: {},
+  liked: [],
   name: null,
   photoUrl: null,
   uid: null
@@ -21,6 +22,7 @@ export const AuthProvider = ({ children }) => {
   const login = async ({ email, password }) => {
     try {
       const { data } = await authApi.post('/', { email, password })
+      console.log(data)
       localStorage.setItem('token', data.token)
       setAuth({
         ...auth,
@@ -30,7 +32,8 @@ export const AuthProvider = ({ children }) => {
         logged: true,
         name: data.name,
         photoUrl: data.photoUrl,
-        uid: data.uid
+        uid: data.uid,
+        liked: data.liked
       })
     } catch (error) {
       setAuth({
@@ -65,6 +68,44 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const updateLikes = async (uid, petId) => {
+    try {
+      const { data } = await authApi.put(`/${petId}`, { uid })
+      setAuth({
+        ...auth,
+        liked: data.usuario.liked
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getLikedPets = useCallback(async () => {
+    try {
+      const { data } = await authApi.get('/liked')
+      setAuth({
+        ...auth,
+        liked: data.liked
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  })
+
+  const updatePhotoUrl = async (uid, url) => {
+    try {
+      const { data } = await authApi.put(`/photo/${uid}`, { url })
+      localStorage.setItem('token', data.token)
+      console.log(data)
+      setAuth({
+        ...auth,
+        photoUrl: data.photoUrl
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const verificarToken = useCallback(async () => {
     onChecking()
     const token = localStorage.getItem('token')
@@ -85,7 +126,8 @@ export const AuthProvider = ({ children }) => {
         logged: true,
         name,
         photoUrl,
-        uid
+        uid,
+        liked: []
       })
     } else {
       logout()
@@ -101,7 +143,8 @@ export const AuthProvider = ({ children }) => {
       error: null,
       name: null,
       photoUrl: null,
-      uid: null
+      uid: null,
+      liked: []
     })
   }
 
@@ -121,7 +164,10 @@ export const AuthProvider = ({ children }) => {
       login,
       logout,
       register,
-      verificarToken
+      updateLikes,
+      verificarToken,
+      getLikedPets,
+      updatePhotoUrl
     }}>
       { children }
     </AuthContext.Provider>

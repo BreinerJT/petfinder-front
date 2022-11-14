@@ -1,9 +1,9 @@
-import { useContext } from 'react'
+import { useMemo, useContext } from 'react'
+
+import { AuthContext } from '../../context/auth'
 import { UiContext } from '../../context/ui'
 import { SidebarLayout } from '../layout/SidebarLayout'
 import { SidebarChatItem, SidebarHeader } from './'
-
-const algo = ['1', '0', '2', '3', '4', '5']
 
 const users = [
   { name: 'Usuario Uno', online: true },
@@ -15,6 +15,13 @@ const users = [
 
 export const Sidebar = () => {
   const { showSwipeView, toggleSwipeView, toggleMessagesView } = useContext(UiContext)
+  const { liked } = useContext(AuthContext)
+
+  const likes = useMemo(() => {
+    const likes = structuredClone(liked)
+    return likes.slice(0, 15)
+  }, [liked])
+
   return (
     <SidebarLayout>
       <SidebarHeader />
@@ -34,25 +41,14 @@ export const Sidebar = () => {
           ? (
               <div className='flex flex-wrap justify-center items-center gap-1 gap-y-2 p-4'>
                 {
-                  algo.map((_, index) => (
-                    <img className='cursor-pointer rounded-md h-20 w-24 object-cover select-none' key={index} src={`./images/${index}.jpeg`} alt="da igual" />
+                  likes.map((like, index) => (
+                    <div
+                      className='cursor-pointer rounded-md h-20 w-24 select-none bg-cover'
+                      key={index}
+                      style={{ backgroundImage: `url('${like.photos[0]}')` }}
+                    />
                   ))
                 }
-                {/* <div className='bg-red-900 rounded-md h-20 w-24' />
-                <div className='bg-red-900 rounded-md h-20 w-24' />
-                <div className='bg-red-900 rounded-md h-20 w-24' />
-                <div className='bg-red-900 rounded-md h-20 w-24' />
-                <div className='bg-red-900 rounded-md h-20 w-24' />
-                <div className='bg-red-900 rounded-md h-20 w-24' />
-                <div className='bg-red-900 rounded-md h-20 w-24' />
-                <div className='bg-red-900 rounded-md h-20 w-24' />
-                <div className='bg-red-900 rounded-md h-20 w-24' />
-                <div className='bg-red-900 rounded-md h-20 w-24' />
-                <div className='bg-red-900 rounded-md h-20 w-24' />
-                <div className='bg-red-900 rounded-md h-20 w-24' />
-                <div className='bg-red-900 rounded-md h-20 w-24' />
-                <div className='bg-red-900 rounded-md h-20 w-24' />
-                <div className='bg-red-900 rounded-md h-20 w-24' /> */}
               </div>
             )
           : (

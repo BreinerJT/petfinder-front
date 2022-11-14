@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const petApi = axios.create({
-  baseURL: 'http://localhost:4000/api/pet'
+  baseURL: import.meta.env.VITE_PET_API_URL
 })
 
 petApi.interceptors.request.use(config => {

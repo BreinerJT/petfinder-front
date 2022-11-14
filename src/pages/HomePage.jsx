@@ -1,11 +1,19 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 
 import { UiContext } from '../context/ui'
 import { MatchView, Sidebar } from '../components/ui'
 import { ChatMessage } from '../components/chat'
 
+import { AuthContext } from '../context/auth'
+
 export const HomePage = () => {
   const { showSwipeView } = useContext(UiContext)
+  const { getLikedPets } = useContext(AuthContext)
+
+  useEffect(() => {
+    getLikedPets()
+  }, [])
+
   return (
   <>
     <div className='flex'>
