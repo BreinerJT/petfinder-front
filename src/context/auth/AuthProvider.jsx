@@ -70,11 +70,20 @@ export const AuthProvider = ({ children }) => {
 
   const updateLikes = async (uid, petId) => {
     try {
-      const { data } = await authApi.put(`/${petId}`, { uid })
+      const { data } = await authApi.put(`/like/${petId}`, { uid })
       setAuth({
         ...auth,
         liked: data.usuario.liked
       })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const updateDislikes = async (uid, petId) => {
+    try {
+      const { data } = await authApi.put(`/dislike/${petId}`, { uid })
+      return data.ok
     } catch (error) {
       console.log(error)
     }
@@ -161,13 +170,14 @@ export const AuthProvider = ({ children }) => {
       ...auth,
 
       // Metodos
+      getLikedPets,
       login,
       logout,
       register,
+      updateDislikes,
       updateLikes,
-      verificarToken,
-      getLikedPets,
-      updatePhotoUrl
+      updatePhotoUrl,
+      verificarToken
     }}>
       { children }
     </AuthContext.Provider>

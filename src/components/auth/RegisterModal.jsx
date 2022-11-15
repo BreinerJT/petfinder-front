@@ -8,6 +8,11 @@ import { AuthContext } from '../../context/auth'
 import { Input } from '../ui'
 import { registerSchema } from '../../config'
 
+const options = [
+  { value: '', text: '--Seleccione una ciudad--', disabled: true },
+  { value: 'Bogota', text: 'Bogota' }
+]
+
 Modal.setAppElement('#root')
 export const RegisterModal = () => {
   const { isRegisterModalOpen, closeRegisterModal } = useContext(UiContext)
@@ -47,12 +52,25 @@ export const RegisterModal = () => {
 					/>
 				</div>
 				<div className='mb-6'>
-					<Input
-						border={ errors.city?.message }
-						label='Ciudad'
-						placeholder='Ingrese su ciudad...'
-						{...register('city')}
-					/>
+				<label className='grid gap-2 font-medium text-gray-900'>
+						Ciudad
+						<select
+							className={`bg-gray-50 border-2 border-gray-200 text-gray-900 text-sm rounded-lg block w-full p-2.5 ${errors.city?.message && 'border-red-500'}`}
+							{ ...register('city') }
+						>
+						{
+							options.map(option => (
+								<option
+									key={ option.value }
+									value={ option.value }
+									disabled={ option.disabled }
+								>
+									{ option.text }
+								</option>
+							))
+						}
+						</select>
+						</label>
 				</div>
 				<div className='mb-6'>
 					<Input

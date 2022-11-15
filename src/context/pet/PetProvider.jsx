@@ -40,7 +40,10 @@ export const PetProvider = ({ children }) => {
     const { age, city, description, name, photos } = pet
     try {
       const { data } = await petApi.post('/new', { age, city, description, name, photos })
-      console.log(data)
+      setPets({
+        ...pets,
+        myPets: [...pets.myPets, data.pet]
+      })
       return true
     } catch (error) {
       console.log(error)

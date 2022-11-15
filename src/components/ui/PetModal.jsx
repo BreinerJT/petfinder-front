@@ -41,8 +41,8 @@ export const PetModal = () => {
     }
     const resp = await addNewPet(newPet)
     if (resp) {
-      reset()
       closePetModal()
+      reset()
     }
   }
 
@@ -90,14 +90,6 @@ export const PetModal = () => {
 						}
 						</select>
 					</label>
-				</div>
-				<div className='mb-2'>
-					<Input
-						border={ errors.city?.message }
-						label='Ciudad'
-						placeholder='Ingrese su ciudad...'
-						{ ...register('city') }
-					/>
 				</div>
 				<div className='mb-2'>
 					<label className='grid gap-2 font-medium text-gray-900'>

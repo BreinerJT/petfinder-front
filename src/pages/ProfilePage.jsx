@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import { AuthContext } from '../context/auth'
@@ -14,6 +14,11 @@ export const ProfilePage = () => {
   const { logout, name, city, updatePhotoUrl, photoUrl, uid } = useContext(AuthContext)
   const { getOwnPets, myPets } = useContext(PetContext)
 
+  const pets = useMemo(() => {
+    const pets = structuredClone(myPets)
+    return pets
+  }, [myPets])
+
   const fileInputRef = useRef()
 
   const onChangePhoto = async ({ target }) => {
@@ -22,9 +27,9 @@ export const ProfilePage = () => {
     updatePhotoUrl(uid, photo[0])
   }
 
-  // useEffect(() => {
-  //   getOwnPets()
-  // }, [myPets])
+  useEffect(() => {
+    getOwnPets()
+  }, [])
 
   return (
   <>
@@ -83,7 +88,7 @@ export const ProfilePage = () => {
         <h1 className='font-semibold text-2xl pb-6 text-gray-700 dark:text-slate-300'>¡Mis mascotas en adopcion!</h1>
         <div className='flex gap-8 justify-center items-center flex-wrap'>
           {
-            myPets.map(pet => (
+            pets.map(pet => (
               <div key={pet.id} className='relative max-w-[260px] h-80 rounded-2xl overflow-hidden'>
                 <div className='w-[260px] h-80 rounded-2xl bg-cover bg-center' style={{ backgroundImage: `url("${pet.photos[0]}")` }} />
                 <div className='text-start absolute bottom-0 px-4 py-1 backdrop-blur-sm bg-black bg-opacity-5 w-full'>

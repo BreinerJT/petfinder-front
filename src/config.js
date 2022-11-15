@@ -37,10 +37,6 @@ export const petSchema = yup.object({
   age: yup
     .string()
     .required('Es necesario una edad.'),
-  city: yup
-    .string()
-    .matches(/^([^0-9]*)$/i, 'La ciudad no es valida.')
-    .required('Es necesario ingresar una ciudad.'),
   quality1: yup
     .string()
     .matches(/^\b[a-zA-Z0-9_]+\b$/)
