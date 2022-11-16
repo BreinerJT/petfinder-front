@@ -1,15 +1,16 @@
-import { useEffect, useContext, useCallback, useState } from 'react'
+import { useContext, useCallback, useState } from 'react'
+
+import { AuthContext } from './'
+import { PetContext } from '../pet'
 
 import { authApi } from '../../apis'
-import { PetContext } from '../pet'
-import { AuthContext } from './AuthContext'
 
 const initialState = {
   checking: true,
   email: null,
-  logged: false,
   error: {},
   liked: [],
+  logged: false,
   name: null,
   photoUrl: null,
   uid: null
@@ -22,7 +23,6 @@ export const AuthProvider = ({ children }) => {
   const login = async ({ email, password }) => {
     try {
       const { data } = await authApi.post('/', { email, password })
-      console.log(data)
       localStorage.setItem('token', data.token)
       setAuth({
         ...auth,
@@ -105,7 +105,6 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data } = await authApi.put(`/photo/${uid}`, { url })
       localStorage.setItem('token', data.token)
-      console.log(data)
       setAuth({
         ...auth,
         photoUrl: data.photoUrl

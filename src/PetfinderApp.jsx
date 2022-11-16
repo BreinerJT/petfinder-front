@@ -1,9 +1,10 @@
 import { BrowserRouter } from 'react-router-dom'
 
-import { UiProvider } from './context/ui'
 import { AuthProvider } from './context/auth'
-import { AppRouter } from './router'
 import { PetProvider } from './context/pet'
+import { UiProvider } from './context/ui'
+
+import { AppRouter } from './router'
 
 export const PetfinderApp = () => {
   return (

@@ -58,3 +58,11 @@ export const petSchema = yup.object({
       return file && file.length <= 4
     })
 }).required()
+
+export const petModalOptions = [
+  { value: '', text: '--Seleccione una edad--', disabled: true },
+  { value: 'No sabe su edad', text: 'No sabe su edad' },
+  { value: 'Entre 2 y 6 meses', text: 'Entre 2 y 6 meses' },
+  { value: 'Entre 6 y 12 meses', text: 'Entre 6 y 12 meses' },
+  { value: 'Mayor de un año', text: 'Mayor de un año' }
+]

@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 
 import { UiContext } from '../context/ui'
 import { AuthContext } from '../context/auth'
-import { RegisterModal } from '../components/auth'
+import { RegisterModal } from '../components/modals'
 import { Input } from '../components/ui'
 import { loginSchema } from '../config'
 

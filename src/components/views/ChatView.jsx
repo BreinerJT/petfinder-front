@@ -1,6 +1,6 @@
-import { IncomingMessage, OutcomingMessage, SendMessage } from './'
+import { IncomingMessage, OutcomingMessage, SendMessage } from '../chat'
 
-export const ChatMessage = () => {
+export const ChatView = () => {
   return (
     <>
       <div className='grid px-4 pt-6 overflow-y-auto h-[90%] scrollbar-thumb-blue-500 dark:scrollbar-thumb-white dark:scrollbar-track-black scrollbar-track-slate-300 scrollbar-thin scrollbar-thumb-rounded'>

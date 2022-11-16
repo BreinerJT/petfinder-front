@@ -1,18 +1,12 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 
 import { UiContext } from '../context/ui'
-import { MatchView, Sidebar } from '../components/ui'
-import { ChatMessage } from '../components/chat'
 
-import { AuthContext } from '../context/auth'
+import { Sidebar } from '../components/ui'
+import { ChatView, SwipeView } from '../components/views'
 
 export const HomePage = () => {
   const { showSwipeView } = useContext(UiContext)
-  const { getLikedPets } = useContext(AuthContext)
-
-  useEffect(() => {
-    getLikedPets()
-  }, [])
 
   return (
   <>
@@ -21,8 +15,8 @@ export const HomePage = () => {
       <div className='w-3/4 bg-gray-100 dark:bg-black h-screen'>
         {
           showSwipeView
-            ? <MatchView />
-            : <ChatMessage />
+            ? <SwipeView />
+            : <ChatView />
         }
       </div>
     </div>

@@ -1,8 +1,10 @@
 import { useContext, useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { Loader } from '../components/ui'
+
 import { AuthContext } from '../context/auth'
+
 import { AuthRoutes, PetfinderRoutes } from './'
+import { Loader } from '../components/ui'
 
 export const AppRouter = () => {
   const { logged, verificarToken, checking } = useContext(AuthContext)

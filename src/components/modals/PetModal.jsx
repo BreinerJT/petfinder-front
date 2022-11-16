@@ -3,19 +3,11 @@ import Modal from 'react-modal'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
+import { PetContext } from '../../context/pet'
 import { UiContext } from '../../context/ui'
 import { Input } from '../ui'
-import { petSchema } from '../../config'
-import { PetContext } from '../../context/pet'
 import { onUploadFiles } from '../../helpers'
-
-const options = [
-  { value: '', text: '--Seleccione una edad--', disabled: true },
-  { value: 'No sabe su edad', text: 'No sabe su edad' },
-  { value: 'Entre 2 y 6 meses', text: 'Entre 2 y 6 meses' },
-  { value: 'Entre 6 y 12 meses', text: 'Entre 6 y 12 meses' },
-  { value: 'Mayor de un año', text: 'Mayor de un año' }
-]
+import { petModalOptions, petSchema } from '../../config'
 
 Modal.setAppElement('#root')
 export const PetModal = () => {
@@ -78,7 +70,7 @@ export const PetModal = () => {
 							{ ...register('age') }
 						>
 						{
-							options.map(option => (
+							petModalOptions.map(option => (
 								<option
 									key={ option.value }
 									value={ option.value }

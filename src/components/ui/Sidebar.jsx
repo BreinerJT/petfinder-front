@@ -1,9 +1,8 @@
-import { useMemo, useContext } from 'react'
+import { useContext } from 'react'
 
-import { AuthContext } from '../../context/auth'
 import { UiContext } from '../../context/ui'
 import { SidebarLayout } from '../layout/SidebarLayout'
-import { SidebarChatItem, SidebarHeader } from './'
+import { LikedPetItemList, SidebarChatItem, SidebarHeader } from './'
 
 const users = [
   { name: 'Usuario Uno', online: true },
@@ -15,12 +14,6 @@ const users = [
 
 export const Sidebar = () => {
   const { showSwipeView, toggleSwipeView, toggleMessagesView } = useContext(UiContext)
-  const { liked } = useContext(AuthContext)
-
-  const likes = useMemo(() => {
-    const likes = structuredClone(liked)
-    return likes.slice(0, 15)
-  }, [liked])
 
   return (
     <SidebarLayout>
@@ -38,26 +31,13 @@ export const Sidebar = () => {
       </div>
       {
         showSwipeView
-          ? (
-              <div className='flex flex-wrap justify-center items-center gap-1 gap-y-2 p-4'>
-                {
-                  likes.map((like, index) => (
-                    <div
-                      className='cursor-pointer rounded-md h-20 w-24 select-none bg-cover'
-                      key={index}
-                      style={{ backgroundImage: `url('${like.photos[0]}')` }}
-                    />
-                  ))
-                }
-              </div>
-            )
+          ? <LikedPetItemList />
           : (
               users.map(user => (
                 <SidebarChatItem key={user.name} user={ user } />
               ))
             )
       }
-
       {/* Espacio Extra */}
       <div className='h-20'></div>
     </SidebarLayout>

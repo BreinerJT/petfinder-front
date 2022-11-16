@@ -5,7 +5,7 @@ import { AuthContext } from '../context/auth'
 import { PetContext } from '../context/pet'
 import { UiContext } from '../context/ui'
 
-import { PetModal } from '../components/ui'
+import { PetModal } from '../components/modals'
 import { SidebarLayout } from '../components/layout'
 import { onUploadFiles } from '../helpers'
 

@@ -5,7 +5,7 @@ import TinderCard from 'react-tinder-card'
 import { AuthContext } from '../../context/auth'
 import { PetContext } from '../../context/pet'
 
-export const MatchView = () => {
+export const SwipeView = () => {
   const { getAllPets, allPets } = useContext(PetContext)
   const { uid, updateLikes, updateDislikes } = useContext(AuthContext)
   const [currentIndex, setCurrentIndex] = useState(allPets.length - 1)
