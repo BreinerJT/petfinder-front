@@ -8,11 +8,14 @@ import { UiContext } from '../context/ui'
 import { PetModal } from '../components/modals'
 import { SidebarLayout } from '../components/layout'
 import { onUploadFiles } from '../helpers'
+import { ChatContext } from '../context/chat'
+import { types } from '../types/types'
 
 export const ProfilePage = () => {
-  const { openPetModal, toggleTheme, isDark } = useContext(UiContext)
   const { logout, name, city, updatePhotoUrl, photoUrl, uid } = useContext(AuthContext)
-  const { getOwnPets, myPets } = useContext(PetContext)
+  const { dispatch } = useContext(ChatContext)
+  const { getOwnPets, myPets, cleanPets } = useContext(PetContext)
+  const { openPetModal, toggleTheme, isDark, toggleSwipeView } = useContext(UiContext)
 
   const pets = useMemo(() => {
     const pets = structuredClone(myPets)
@@ -25,6 +28,13 @@ export const ProfilePage = () => {
     if (target.files === 0) return
     const photo = await onUploadFiles(target.files)
     updatePhotoUrl(uid, photo[0])
+  }
+
+  const onLogout = () => {
+    logout()
+    cleanPets()
+    toggleSwipeView()
+    dispatch({ type: types.limpiarMensajes })
   }
 
   useEffect(() => {
@@ -75,7 +85,7 @@ export const ProfilePage = () => {
                 Volver
               </Link>
               <button
-                onClick={ logout }
+                onClick={ onLogout }
                 className="w-full text-start py-2 px-4 text-gray-700 dark:text-gray-200 hover:text-red-500 dark:hover:text-red-500 hover:bg-gray-100 dark:hover:bg-gray-600"
               >
                 Salir

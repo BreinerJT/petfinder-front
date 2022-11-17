@@ -25,12 +25,13 @@ export const PetProvider = ({ children }) => {
 
   const getAllPets = async () => {
     try {
-      const { data } = await petApi.get('/')
+      const resp = await petApi.get('/')
+      const { data } = resp
       setPets({
         ...pets,
         allPets: data.pets
       })
-      return true
+      return resp
     } catch (error) {
       console.log(error)
     }

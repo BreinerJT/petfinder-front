@@ -52,7 +52,6 @@ export const IndexPage = () => {
 							border={ errors.email?.message }
 							label='Correo electronico'
 							placeholder='unknown@google.com'
-							themed
 							type='email'
 							{...register('email') }
 						/>
@@ -62,7 +61,6 @@ export const IndexPage = () => {
 							border={ errors.password?.message }
 							label='Contraseña'
 							placeholder='Ingrese su contraseña...'
-							themed
 							type='password'
 							{...register('password')}
 						/>

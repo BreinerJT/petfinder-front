@@ -1,7 +1,7 @@
-import { BrowserRouter } from 'react-router-dom'
-
 import { AuthProvider } from './context/auth'
+import { ChatProvider } from './context/chat'
 import { PetProvider } from './context/pet'
+import { SocketProvider } from './context/socket'
 import { UiProvider } from './context/ui'
 
 import { AppRouter } from './router'
@@ -10,11 +10,13 @@ export const PetfinderApp = () => {
   return (
     <UiProvider>
       <PetProvider>
-        <AuthProvider>
-            <BrowserRouter>
+        <ChatProvider>
+          <AuthProvider>
+            <SocketProvider>
               <AppRouter />
-            </BrowserRouter>
-        </AuthProvider>
+            </SocketProvider>
+          </AuthProvider>
+        </ChatProvider>
       </PetProvider>
     </UiProvider>
   )

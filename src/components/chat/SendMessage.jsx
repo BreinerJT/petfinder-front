@@ -2,29 +2,40 @@ import { useContext, useState } from 'react'
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 
+import { AuthContext } from '../../context/auth'
+import { ChatContext } from '../../context/chat'
+import { SocketContext } from '../../context/socket'
 import { UiContext } from '../../context/ui'
 
 export const SendMessage = () => {
+  const { uid } = useContext(AuthContext)
+  const { chatActivo } = useContext(ChatContext)
+  const { socket } = useContext(SocketContext)
   const { isDark } = useContext(UiContext)
-  const [message, setMessage] = useState('')
+  const [mensaje, setMensaje] = useState('')
   const [showEmojis, setShowEmojis] = useState(false)
-  const isInputEmpty = message.length === 0
+  const isInputEmpty = mensaje.length === 0
 
   const onChange = ({ target }) => {
     const { value } = target
-    setMessage(value)
+    setMensaje(value)
   }
 
   const setEmoji = (e) => {
-    setMessage(message.concat(e.native))
+    setMensaje(mensaje.concat(e.native))
   }
 
   const onSubmit = (e) => {
     e.preventDefault()
-
     if (isInputEmpty) { return }
 
-    setMessage('')
+    socket.emit('mensaje-personal', {
+      de: uid,
+      para: chatActivo,
+      mensaje
+    })
+
+    setMensaje('')
   }
 
   return (
@@ -35,7 +46,7 @@ export const SendMessage = () => {
         onChange={ onChange }
         placeholder='Mensaje...'
         type='text'
-        value={ message }
+        value={ mensaje }
       />
       <div className='relative flex gap-4 justify-center items-center px-8'>
         <button

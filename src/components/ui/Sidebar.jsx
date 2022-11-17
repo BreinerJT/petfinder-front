@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { ChatContext } from '../../context/chat'
 
 import { UiContext } from '../../context/ui'
 import { SidebarLayout } from '../layout/SidebarLayout'
@@ -13,6 +14,7 @@ const users = [
 ]
 
 export const Sidebar = () => {
+  const { usuarios } = useContext(ChatContext)
   const { showSwipeView, toggleSwipeView, toggleMessagesView } = useContext(UiContext)
 
   return (
@@ -33,8 +35,8 @@ export const Sidebar = () => {
         showSwipeView
           ? <LikedPetItemList />
           : (
-              users.map(user => (
-                <SidebarChatItem key={user.name} user={ user } />
+              usuarios.map(usuario => (
+                  <SidebarChatItem key={usuario.id} usuario={ usuario } />
               ))
             )
       }

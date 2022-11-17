@@ -1,18 +1,20 @@
 import { useContext } from 'react'
 import { AuthContext } from '../../context/auth'
+import { formatDate } from '../../helpers'
 
-export const OutcomingMessage = () => {
+export const OutcomingMessage = ({ msg }) => {
   const { photoUrl } = useContext(AuthContext)
+  const { mensaje, createdAt } = msg
 
   return (
     <div className="place-self-end mb-4">
       <div className="pr-12 text-end">
-        <p className="font-medium text-sm text-gray-500 dark:text-white pb-1">Oct 29, 12:13</p>
+        <p className="font-medium text-sm text-gray-500 dark:text-white pb-1">{ formatDate(createdAt) }</p>
       </div>
       <div className="flex gap-2 items-center">
         <div className="bg-blue-500 dark:bg-stone-800 dark:bg-opacity-80 rounded-2xl p-2 break-words max-w-sm">
           <p className="text-white font-medium">
-            Lorem lorem lorem Lorem lorem lorem Lorem lorem lorem Lorem lorem lorem Lorem lorem lor lorem
+            { mensaje }
           </p>
         </div>
         <div>

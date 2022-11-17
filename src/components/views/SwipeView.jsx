@@ -6,9 +6,9 @@ import { AuthContext } from '../../context/auth'
 import { PetContext } from '../../context/pet'
 
 export const SwipeView = () => {
-  const { getAllPets, allPets } = useContext(PetContext)
   const { uid, updateLikes, updateDislikes } = useContext(AuthContext)
-  const [currentIndex, setCurrentIndex] = useState(allPets.length - 1)
+  const { getAllPets, allPets } = useContext(PetContext)
+  const [currentIndex, setCurrentIndex] = useState(null)
 
   const currentIndexRef = useRef(currentIndex)
   const canGoBack = currentIndex < allPets?.length - 1
@@ -55,7 +55,17 @@ export const SwipeView = () => {
 
   useEffect(() => {
     getAllPets()
+      .then(resp => resp.data)
+      .then(data => setCurrentIndex(data.pets.length - 1))
   }, [])
+
+  if (currentIndex === -1) {
+    return (
+      <div className='h-full flex justify-center items-center'>
+        <h1 className='dark:text-slate-300 text-2xl'>No hay peludos que ver.</h1>
+      </div>
+    )
+  }
 
   return (
     <div className='h-full overflow-hidden relative flex justify-center items-center'>

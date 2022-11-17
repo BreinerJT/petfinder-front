@@ -1,12 +1,18 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 
+import { PetContext } from '../context/pet'
 import { UiContext } from '../context/ui'
 
 import { Sidebar } from '../components/ui'
 import { ChatView, SwipeView } from '../components/views'
 
 export const HomePage = () => {
+  const { getAllPets } = useContext(PetContext)
   const { showSwipeView } = useContext(UiContext)
+
+  // useEffect(() => {
+  //   getAllPets()
+  // }, [])
 
   return (
   <>

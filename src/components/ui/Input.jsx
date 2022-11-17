@@ -1,9 +1,9 @@
 import { forwardRef } from 'react'
 
-export const Input = forwardRef(({ label, themed, name, border, type = 'text', ...props }, ref) => {
+export const Input = forwardRef(({ border, label, name, type = 'text', ...props }, ref) => {
   return (
     <label
-      className={`grid gap-2 font-medium text-gray-900 ${themed && 'dark:text-white'}`}
+      className='grid gap-2 font-medium text-gray-900'
     >
       { label }
       <input

@@ -1,7 +1,6 @@
-import { useContext, useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { AuthContext } from './'
-import { PetContext } from '../pet'
 
 import { authApi } from '../../apis'
 
@@ -18,7 +17,6 @@ const initialState = {
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(initialState)
-  const { cleanPets } = useContext(PetContext)
 
   const login = async ({ email, password }) => {
     try {
@@ -144,7 +142,6 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('token')
-    cleanPets()
     setAuth({
       email: null,
       logged: false,
