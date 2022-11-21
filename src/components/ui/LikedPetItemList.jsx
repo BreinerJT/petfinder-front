@@ -11,7 +11,7 @@ export const LikedPetItemList = () => {
   const { liked, getLikedPets } = useContext(AuthContext)
   const { dispatch } = useContext(ChatContext)
   const { socket } = useContext(SocketContext)
-  const { toggleMessagesView } = useContext(UiContext)
+  const { setMessagesView } = useContext(UiContext)
 
   const likes = useMemo(() => {
     const likes = structuredClone(liked)
@@ -20,12 +20,11 @@ export const LikedPetItemList = () => {
 
   const onClick = (postedBy) => {
     socket.emit(socketTypes.crearChat, postedBy)
-    console.log(postedBy)
     dispatch({
       type: types.activarChat,
       payload: postedBy
     })
-    toggleMessagesView()
+    setMessagesView()
   }
 
   useEffect(() => {

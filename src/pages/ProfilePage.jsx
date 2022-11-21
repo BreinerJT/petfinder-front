@@ -15,7 +15,7 @@ export const ProfilePage = () => {
   const { logout, name, city, updatePhotoUrl, photoUrl, uid } = useContext(AuthContext)
   const { dispatch } = useContext(ChatContext)
   const { getOwnPets, myPets, cleanPets } = useContext(PetContext)
-  const { openPetModal, toggleTheme, isDark, toggleSwipeView } = useContext(UiContext)
+  const { openPetModal, toggleTheme, isDark, setDefaultView } = useContext(UiContext)
 
   const pets = useMemo(() => {
     const pets = structuredClone(myPets)
@@ -33,7 +33,7 @@ export const ProfilePage = () => {
   const onLogout = () => {
     logout()
     cleanPets()
-    toggleSwipeView()
+    setDefaultView()
     dispatch({ type: types.limpiarMensajes })
   }
 
@@ -94,7 +94,7 @@ export const ProfilePage = () => {
           </div>
         </div>
       </SidebarLayout>
-      <div className='p-8 text-white w-3/4 bg-gray-100 dark:bg-black h-screen overflow-y-auto text-center scrollbar-thumb-blue-500 dark:scrollbar-thumb-white dark:scrollbar-track-black scrollbar-track-slate-300 scrollbar-thin scrollbar-thumb-rounded'>
+      <div className='text-white w-3/4 bg-gray-100 dark:bg-black h-screen overflow-y-auto text-center scrollbar-thumb-blue-500 dark:scrollbar-thumb-white dark:scrollbar-track-black scrollbar-track-slate-300 scrollbar-thin scrollbar-thumb-rounded'>
         {
           myPets.length === 0
             ? (
@@ -108,8 +108,8 @@ export const ProfilePage = () => {
               )
             : (
               <>
-                <h1 className='font-semibold text-2xl pb-6 text-gray-700 dark:text-slate-300'>¡Mis mascotas en adopcion!</h1>
-                <div className='flex gap-8 justify-center items-center flex-wrap'>
+                <h1 className='font-semibold text-2xl pb-6 pt-8 text-gray-700 dark:text-slate-300'>¡Mis mascotas en adopcion!</h1>
+                <div className='flex gap-8 justify-center items-center flex-wrap pb-8'>
                   {
                     pets.map(pet => (
                     <div key={pet.id} className='relative max-w-[260px] h-80 rounded-2xl overflow-hidden'>

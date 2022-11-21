@@ -23,18 +23,6 @@ export const PetProvider = ({ children }) => {
     }
   }
 
-  const getAllPets = async () => {
-    try {
-      const { data } = await petApi.get('/')
-      setPets({
-        ...pets,
-        allPets: data.pets
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   const addNewPet = async (pet) => {
     const { age, city, description, name, photos } = pet
     try {
@@ -62,8 +50,8 @@ export const PetProvider = ({ children }) => {
       //  Metodos
       addNewPet,
       cleanPets,
-      getAllPets,
-      getOwnPets
+      getOwnPets,
+      setPets
     }}>
       { children }
     </PetContext.Provider>
