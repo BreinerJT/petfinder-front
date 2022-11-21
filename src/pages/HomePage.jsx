@@ -10,9 +10,9 @@ export const HomePage = () => {
   const { getAllPets } = useContext(PetContext)
   const { showSwipeView } = useContext(UiContext)
 
-  // useEffect(() => {
-  //   getAllPets()
-  // }, [])
+  useEffect(() => {
+    getAllPets()
+  }, [])
 
   return (
   <>

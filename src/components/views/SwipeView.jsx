@@ -1,4 +1,4 @@
-import { useContext, useEffect, createRef, useMemo, useRef, useState } from 'react'
+import { useContext, createRef, useMemo, useRef, useState } from 'react'
 
 import TinderCard from 'react-tinder-card'
 
@@ -7,16 +7,16 @@ import { PetContext } from '../../context/pet'
 
 export const SwipeView = () => {
   const { uid, updateLikes, updateDislikes } = useContext(AuthContext)
-  const { getAllPets, allPets } = useContext(PetContext)
-  const [currentIndex, setCurrentIndex] = useState(null)
+  const { allPets } = useContext(PetContext)
+  const [currentIndex, setCurrentIndex] = useState(allPets.length - 1)
 
   const currentIndexRef = useRef(currentIndex)
-  const canGoBack = currentIndex < allPets?.length - 1
+  const canGoBack = currentIndex < allPets.length - 1
   const canSwipe = currentIndex >= 0
 
   const childRefs = useMemo(
     () =>
-      Array(allPets?.length)
+      Array(allPets.length)
         .fill(0)
         .map((i) => createRef()),
     []
@@ -41,7 +41,7 @@ export const SwipeView = () => {
   }
 
   const swipe = async (dir, pet) => {
-    if (canSwipe && currentIndex < allPets?.length) {
+    if (canSwipe && currentIndex < allPets.length) {
       await childRefs[currentIndex].current.swipe(dir)
     }
   }
@@ -53,12 +53,6 @@ export const SwipeView = () => {
     await childRefs[newIndex].current.restoreCard()
   }
 
-  useEffect(() => {
-    getAllPets()
-      .then(resp => resp.data)
-      .then(data => setCurrentIndex(data.pets.length - 1))
-  }, [])
-
   if (currentIndex === -1) {
     return (
       <div className='h-full flex justify-center items-center'>
@@ -69,7 +63,6 @@ export const SwipeView = () => {
 
   return (
     <div className='h-full overflow-hidden relative flex justify-center items-center'>
-      {/* <div className='max-w-[260px] h-[300px] relative'> */}
       <div className='w-[260px] h-80'>
         {
           allPets.map((mascota, index) => (

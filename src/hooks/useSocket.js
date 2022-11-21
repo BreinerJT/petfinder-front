@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
+import { socketTypes } from '../types'
 
 export const useSocket = (serverPath) => {
   const [socket, setSocket] = useState(null)
@@ -9,8 +10,8 @@ export const useSocket = (serverPath) => {
     const token = localStorage.getItem('token')
 
     const socketTemp = io(serverPath, {
-      autoConnect: true,
-      forceNew: true,
+      // autoConnect: true,
+      // forceNew: true,
       withCredentials: true,
       query: {
         'x-token': token
@@ -25,15 +26,15 @@ export const useSocket = (serverPath) => {
   }, [socket])
 
   useEffect(() => {
-    setOnline(socket?.connected)
+    setOnline(socket?.connect())
   }, [socket])
 
   useEffect(() => {
-    socket?.on('connect', () => setOnline(true))
+    socket?.on(socketTypes.conectar, () => setOnline(true))
   }, [socket])
 
   useEffect(() => {
-    socket?.on('disconnect', () => setOnline(false))
+    socket?.on(socketTypes.desconectar, () => setOnline(false))
   }, [socket])
 
   return {

@@ -1,3 +1,5 @@
 export * from './IncomingMessage'
 export * from './OutcomingMessage'
 export * from './SendMessage'
+export * from './SidebarChatItem'
+export * from './SidebarChatItemsList'

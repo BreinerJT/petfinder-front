@@ -8,10 +8,10 @@ export const OutcomingMessage = ({ msg }) => {
 
   return (
     <div className="place-self-end mb-4">
-      <div className="pr-12 text-end">
+      <div className="text-end">
         <p className="font-medium text-sm text-gray-500 dark:text-white pb-1">{ formatDate(createdAt) }</p>
       </div>
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-2 items-center justify-end">
         <div className="bg-blue-500 dark:bg-stone-800 dark:bg-opacity-80 rounded-2xl p-2 break-words max-w-sm">
           <p className="text-white font-medium">
             { mensaje }

@@ -1,12 +1,11 @@
 import { useContext } from 'react'
-import { AuthContext } from '../../context/auth'
 
 import { ChatContext } from '../../context/chat'
+import { scrollToBottom } from '../../helpers'
 import { types } from '../../types/types'
 
 export const SidebarChatItem = ({ usuario }) => {
-  const { dispatch, getMessages, chatActivo, mensajes } = useContext(ChatContext)
-  const { uid } = useContext(AuthContext)
+  const { dispatch, getMessages, chatActivo } = useContext(ChatContext)
 
   const onClick = async () => {
     dispatch({
@@ -21,6 +20,7 @@ export const SidebarChatItem = ({ usuario }) => {
         payload: resp.messages
       })
     }
+    scrollToBottom('mensajes')
   }
 
   return (
