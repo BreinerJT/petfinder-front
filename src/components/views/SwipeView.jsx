@@ -1,37 +1,37 @@
-import { useMemo, Suspense, lazy, useContext } from 'react'
+import { Suspense, lazy, useContext } from 'react'
 
 import TinderCard from 'react-tinder-card'
 
 import { PetContext } from '../../context/pet'
-import { useTinderCard } from '../../hooks/useTinderCard'
+import { useTinderCard } from '../../hooks'
 const SwipeCard = lazy(() => import('../ui/SwipeCard'))
 
 export const SwipeView = () => {
   const { allPets } = useContext(PetContext)
   const { swiped } = useTinderCard()
+  const hasNoPets = allPets.length === 0
 
-  const pets = useMemo(() => {
-    const pets = structuredClone(allPets)
-    return pets
-  }, [allPets])
-  console.log(pets)
-  // if (currentIndex === -1) {
-  //   return (
-  //     <div className='h-full flex justify-center items-center'>
-  //       <h1 className='dark:text-slate-300 text-2xl'>No hay peludos que ver.</h1>
-  //     </div>
-  //   )
-  // }
+  if (hasNoPets) {
+    return (
+      <div className='h-full w-full'>
+        <div className='flex items-center h-full w-full text-center'>
+          <h2 className='text-2xl text-black dark:text-slate-300 bg-white dark:bg-slate-800  py-4 w-full'>
+            Aun no hay mascota nuevas.
+          </h2>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className='h-full overflow-hidden relative flex justify-center items-center'>
       <div className='w-[260px] h-80'>
         {
-          pets.map((mascota, index) => (
+          allPets.map(mascota => (
             <TinderCard
               className='absolute'
               key={ mascota.id }
-              onSwipe={ (dir) => swiped(dir, mascota.id, index) }
+              onSwipe={ (dir) => swiped(dir, mascota.id) }
               preventSwipe={ ['down', 'up'] }
             >
               <Suspense fallback={ <div className='w-[260px] h-80 bg-slate-900 rounded-2xl' /> }>

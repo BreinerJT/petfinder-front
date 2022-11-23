@@ -5,7 +5,7 @@ import { UiContext } from './'
 export const UiProvider = ({ children }) => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
   const [isPetModalOpen, setIsPetModalOpen] = useState(false)
-  const [view, setView] = useState(null)
+  const [showSwipeView, setShowSwipeView] = useState(true)
   const { toggleTheme, isDark, setDarkTheme, setLightTheme } = useTheme()
 
   const closeRegisterModal = () => {
@@ -25,21 +25,17 @@ export const UiProvider = ({ children }) => {
   }
 
   const setSwipeView = () => {
-    setView('swipe')
+    setShowSwipeView(true)
   }
 
   const setMessagesView = () => {
-    setView('chat')
-  }
-
-  const setDefaultView = () => {
-    setView(null)
+    setShowSwipeView(false)
   }
 
   return (
     <UiContext.Provider value={{
       isRegisterModalOpen,
-      view,
+      showSwipeView,
       isPetModalOpen,
 
       closeRegisterModal,
@@ -50,7 +46,6 @@ export const UiProvider = ({ children }) => {
 
       setSwipeView,
       setMessagesView,
-      setDefaultView,
 
       toggleTheme,
       setDarkTheme,

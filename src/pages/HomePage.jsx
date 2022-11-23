@@ -1,26 +1,23 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 
-import { PetContext } from '../context/pet'
 import { UiContext } from '../context/ui'
 
-import { Sidebar } from '../components/ui'
 import { ChatView, SwipeView } from '../components/views'
+import { Sidebar } from '../components/ui'
 
 export const HomePage = () => {
-  // const { getAllPets } = useContext(PetContext)
-  const { view } = useContext(UiContext)
-
-  // useEffect(() => {
-  //   getAllPets()
-  // }, [])
+  const { showSwipeView } = useContext(UiContext)
 
   return (
     <>
       <div className='flex'>
         <Sidebar />
         <div className='w-3/4 bg-gray-100 dark:bg-black h-screen'>
-          { view === 'swipe' && <SwipeView /> }
-          { view === 'chat' && <ChatView /> }
+          {
+            showSwipeView
+              ? <SwipeView />
+              : <ChatView />
+          }
         </div>
       </div>
     </>

@@ -1,26 +1,21 @@
-import { useContext, useEffect, useRef, useMemo } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
 import { AuthContext } from '../context/auth'
+import { ChatContext } from '../context/chat'
 import { PetContext } from '../context/pet'
 import { UiContext } from '../context/ui'
 
-import { PetModal } from '../components/modals'
 import { SidebarLayout } from '../components/layout'
+import { PetModal } from '../components/modals'
 import { onUploadFiles } from '../helpers'
-import { ChatContext } from '../context/chat'
-import { types } from '../types/types'
+import { types } from '../types'
 
 export const ProfilePage = () => {
   const { logout, name, city, updatePhotoUrl, photoUrl, uid } = useContext(AuthContext)
   const { dispatch } = useContext(ChatContext)
   const { getOwnPets, myPets, cleanPets } = useContext(PetContext)
-  const { openPetModal, toggleTheme, isDark, setDefaultView } = useContext(UiContext)
-
-  const pets = useMemo(() => {
-    const pets = structuredClone(myPets)
-    return pets
-  }, [myPets])
+  const { openPetModal, toggleTheme, isDark, setSwipeView } = useContext(UiContext)
 
   const fileInputRef = useRef()
 
@@ -33,7 +28,7 @@ export const ProfilePage = () => {
   const onLogout = () => {
     logout()
     cleanPets()
-    setDefaultView()
+    setSwipeView()
     dispatch({ type: types.limpiarMensajes })
   }
 
@@ -111,7 +106,7 @@ export const ProfilePage = () => {
                 <h1 className='font-semibold text-2xl pb-6 pt-8 text-gray-700 dark:text-slate-300'>¡Mis mascotas en adopcion!</h1>
                 <div className='flex gap-8 justify-center items-center flex-wrap pb-8'>
                   {
-                    pets.map(pet => (
+                    myPets.map(pet => (
                     <div key={pet.id} className='relative max-w-[260px] h-80 rounded-2xl overflow-hidden'>
                       <div className='w-[260px] h-80 rounded-2xl bg-cover bg-center' style={{ backgroundImage: `url("${pet.photos[0]}")` }} />
                       <div className='text-start absolute bottom-0 px-4 py-1 backdrop-blur-sm bg-black bg-opacity-5 w-full'>
