@@ -64,7 +64,7 @@ export const IndexPage = () => {
 							type='password'
 							{...register('password')}
 						/>
-						<p className='text-red-500 font-bold text-sm pt-2'>{ auth.error?.login }</p>
+						<p className='text-black font-bold text-sm pt-2'>{ auth.error?.login }</p>
 					</div>
 					<div className='flex items-start mb-6'>
 						<div className='h-5'>

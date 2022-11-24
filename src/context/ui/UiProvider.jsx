@@ -27,11 +27,11 @@ export const UiProvider = ({ children }) => {
 
   const setSwipeView = () => {
     setShowSwipeView(true)
-    scrollToBottom('mensajes')
   }
 
   const setMessagesView = () => {
     setShowSwipeView(false)
+    scrollToBottom('mensajes')
   }
 
   return (
