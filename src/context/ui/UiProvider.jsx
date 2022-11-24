@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { useTheme } from '../../hooks/useTheme'
+import { useTheme } from '../../hooks'
 import { UiContext } from './'
+import { scrollToBottom } from '../../helpers'
 
 export const UiProvider = ({ children }) => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
@@ -26,6 +27,7 @@ export const UiProvider = ({ children }) => {
 
   const setSwipeView = () => {
     setShowSwipeView(true)
+    scrollToBottom('mensajes')
   }
 
   const setMessagesView = () => {

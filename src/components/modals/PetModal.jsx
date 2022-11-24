@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import Modal from 'react-modal'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import Swal from 'sweetalert2'
 
 import { PetContext } from '../../context/pet'
 import { UiContext } from '../../context/ui'
@@ -35,6 +36,7 @@ export const PetModal = () => {
     if (resp) {
       closePetModal()
       reset()
+      Swal.fire(`${data.name}`, 'ha sido agregado exitosamente.', 'success')
     }
   }
 
@@ -95,8 +97,8 @@ export const PetModal = () => {
 				</div>
 				<div className='mb-2'>
 					<label className='grid gap-2 font-medium text-gray-900'>
-						Tienes algunas fotos? (max: 4)
-						<input multiple onChange={ onFileInputChange } type="file" accept="image/png, image/jpeg" { ...register('photos') } />
+						Tienes alguna foto?
+						<input onChange={ onFileInputChange } type="file" accept="image/png, image/jpeg" { ...register('photos') } />
 						<p className='pt-2 text-sm text-red-500 font-semibold'>{errors.photos?.message}</p>
 					</label>
 				</div>
