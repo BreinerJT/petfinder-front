@@ -88,6 +88,7 @@ export const IndexPage = () => {
 					</div>
 					<div className='grid gap-4 mx-auto w-4/5'>
 						<button
+							disabled={ isLoading }
 							className='text-white border border-white bg-inherit font-semibold rounded-lg text-base w-full sm:w-auto px-5 py-2.5 text-center hover:bg-red-500 hover:bg-opacity-40 dark:hover:bg-blue-600'
 							type='submit'
 						>
@@ -98,6 +99,7 @@ export const IndexPage = () => {
 							}
 						</button>
 						<button
+							disabled={ isLoading }
 							className='text-white border border-white bg-inherit font-semibold rounded-lg text-base w-full sm:w-auto px-5 py-2.5 text-center hover:bg-red-500 hover:bg-opacity-40 dark:hover:bg-blue-600'
 							onClick={ openRegisterModal }
 							type='button'

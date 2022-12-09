@@ -66,6 +66,14 @@ export const SwipeView = () => {
           </button>
         </div> */}
       </div>
+      <div className='absolute text-center bottom-8'>
+        <p className='font-semibold text-gray-600 dark:text-zinc-400'>
+          Izquierda = Nope
+        </p>
+        <p className='font-semibold text-gray-600 dark:text-zinc-400'>
+          Derecha = Sipe
+        </p>
+      </div>
     </div>
   )
 }
