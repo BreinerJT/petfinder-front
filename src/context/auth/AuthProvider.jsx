@@ -33,12 +33,14 @@ export const AuthProvider = ({ children }) => {
         uid: data.uid,
         liked: data.liked
       })
+      return true
     } catch (error) {
       setAuth({
         ...auth,
         error: { login: error.response.data.msg },
         checking: false
       })
+      return false
     }
   }
 
@@ -63,6 +65,7 @@ export const AuthProvider = ({ children }) => {
         error: { register: error.response.data.msg },
         checking: false
       })
+      return false
     }
   }
 

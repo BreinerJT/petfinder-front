@@ -1,5 +1,5 @@
 
-const SwipeCard = ({ mascota }) => {
+export const SwipeCard = ({ mascota }) => {
   return (
     <div className='relative w-[260px] h-80 rounded-2xl bg-cover bg-center select-none overflow-hidden'>
       <img className='w-full h-full object-cover' src={ mascota.photos[0] } alt={`${mascota.name} photo`} loading='lazy' />
@@ -18,5 +18,3 @@ const SwipeCard = ({ mascota }) => {
     </div>
   )
 }
-
-export default SwipeCard

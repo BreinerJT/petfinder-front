@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext, useState, useMemo } from 'react'
 
 import { AuthContext } from '../context/auth'
 import { PetContext } from '../context/pet'
@@ -7,6 +7,7 @@ import { petApi } from '../apis'
 export const useTinderCard = () => {
   const { uid, updateLikes, updateDislikes } = useContext(AuthContext)
   const { pets, setPets } = useContext(PetContext)
+  const [isLoadingPets, setIsLoadingPets] = useState(true)
   // const [currentIndex, setCurrentIndex] = useState(allPets.length - 1)
 
   const getAllPets = async () => {
@@ -18,6 +19,8 @@ export const useTinderCard = () => {
       })
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoadingPets(false)
     }
   }
 
@@ -69,6 +72,7 @@ export const useTinderCard = () => {
   }, [])
 
   return {
+    isLoadingPets,
     getAllPets,
     swiped
   }

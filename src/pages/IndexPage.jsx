@@ -1,11 +1,11 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import { UiContext } from '../context/ui'
 import { AuthContext } from '../context/auth'
 import { RegisterModal } from '../components/modals'
-import { Input } from '../components/ui'
+import { Input, Loader } from '../components/ui'
 import { loginSchema } from '../config'
 
 export const IndexPage = () => {
@@ -14,13 +14,19 @@ export const IndexPage = () => {
   const { register, handleSubmit, formState: { errors }, setValue } = useForm({
     resolver: yupResolver(loginSchema)
   })
+  const [isLoading, setIsLoading] = useState(false)
 
-  const onSubmit = ({ email, password, rememberMe }) => {
+  const onSubmit = async ({ email, password, rememberMe }) => {
+    setIsLoading(true)
     rememberMe
       ? localStorage.setItem('email', email)
       :	localStorage.removeItem('email')
 
-    login({ email, password })
+    const resp = await login({ email, password })
+
+    if (!resp) {
+      setIsLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -85,7 +91,11 @@ export const IndexPage = () => {
 							className='text-white border border-white bg-inherit font-semibold rounded-lg text-base w-full sm:w-auto px-5 py-2.5 text-center hover:bg-red-500 hover:bg-opacity-40 dark:hover:bg-blue-600'
 							type='submit'
 						>
-							Iniciar sesion
+							{
+								isLoading
+								  ? <Loader small white />
+								  : 'Iniciar sesion'
+							}
 						</button>
 						<button
 							className='text-white border border-white bg-inherit font-semibold rounded-lg text-base w-full sm:w-auto px-5 py-2.5 text-center hover:bg-red-500 hover:bg-opacity-40 dark:hover:bg-blue-600'

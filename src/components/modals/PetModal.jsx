@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import Modal from 'react-modal'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 
 import { PetContext } from '../../context/pet'
 import { UiContext } from '../../context/ui'
-import { Input } from '../ui'
+import { Input, Loader } from '../ui'
 import { onUploadFiles } from '../../helpers'
 import { petModalOptions, petSchema } from '../../config'
 
@@ -14,6 +14,7 @@ Modal.setAppElement('#root')
 export const PetModal = () => {
   const { isPetModalOpen, closePetModal } = useContext(UiContext)
   const { addNewPet } = useContext(PetContext)
+  const [isLoading, setIsLoading] = useState(false)
   const { handleSubmit, register, formState: { errors }, clearErrors, reset } = useForm({
     resolver: yupResolver(petSchema)
   })
@@ -24,6 +25,7 @@ export const PetModal = () => {
   }
 
   const onSubmit = async (data) => {
+    setIsLoading(true)
     const photos = await onUploadFiles(data.photos)
     const newPet = {
       age: data.age,
@@ -37,6 +39,9 @@ export const PetModal = () => {
       closePetModal()
       reset()
       Swal.fire(`${data.name}`, 'ha sido agregado exitosamente.', 'success')
+      setIsLoading(false)
+    } else {
+      setIsLoading(false)
     }
   }
 
@@ -106,7 +111,11 @@ export const PetModal = () => {
 					type='submit'
 					className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
 				>
-					Agregar peludo
+					{
+						isLoading
+						  ? <Loader small white />
+						  : 'Agregar peludo'
+					}
 				</button>
 			</form>
 		</Modal>

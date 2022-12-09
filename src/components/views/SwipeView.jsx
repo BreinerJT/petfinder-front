@@ -1,17 +1,18 @@
-import { Suspense, lazy, useContext } from 'react'
+import { useContext } from 'react'
 
 import TinderCard from 'react-tinder-card'
 
 import { PetContext } from '../../context/pet'
 import { useTinderCard } from '../../hooks'
-const SwipeCard = lazy(() => import('../ui/SwipeCard'))
+import { Loader, SwipeCard } from '../ui'
 
 export const SwipeView = () => {
   const { allPets } = useContext(PetContext)
-  const { swiped } = useTinderCard()
-  const hasNoPets = allPets.length === 0
+  const { swiped, isLoadingPets } = useTinderCard()
 
-  if (hasNoPets) {
+  if (isLoadingPets) return (<Loader />)
+
+  if (allPets.length === 0) {
     return (
       <div className='h-full w-full'>
         <div className='flex items-center h-full w-full text-center'>
@@ -34,9 +35,7 @@ export const SwipeView = () => {
               onSwipe={ (dir) => swiped(dir, mascota.id) }
               preventSwipe={ ['down', 'up'] }
             >
-              <Suspense fallback={ <div className='w-[260px] h-80 bg-slate-900 rounded-2xl' /> }>
-                <SwipeCard mascota={ mascota } />
-              </Suspense>
+              <SwipeCard mascota={ mascota } />
             </TinderCard>
           ))
         }
